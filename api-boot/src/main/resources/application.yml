@@ -1,0 +1,41 @@
+#dev server info
+server:
+  port: 8086
+
+spring:
+  application:
+    name: store-service
+
+#mybatis config
+mybatis:
+  config-location: classpath:mybatis/mysql/MapperConfig.xml
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+---
+#jdbc
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/example?serverTimezone=Asia/Seoul
+    username: test
+    password: test
+
+#spring:
+#  datasource:
+#    hikari:
+#      driver-class-name: com.mysql.cj.jdbc.Driver​
+#      jdbc-url: jdbc:mysql://127.0.0.1:3306/example
+#      username: test
+#      password: test
+#      idleTimeout: 10000
+#      connection-timeout: 10000
+#      validation-timeout: 10000
+#      maxLifetime: 580000
+#      maximumPoolSize: 30
+#      minimumIdle: 10

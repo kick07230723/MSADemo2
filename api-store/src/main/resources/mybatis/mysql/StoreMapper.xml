@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.msa.store.mapper.StoreMapper">
+
+    <select id="findById" resultType="storeJpo" parameterType="java.lang.String">
+        SELECT * FROM STORE WHERE ID = #{id}
+    </select>
+
+    <select id="totalCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM STORE
+    </select>
+
+    <select id="findByCondition" resultType="storeJpo" parameterType="storeJpo">
+        SELECT * FROM STORE
+        <include refid="base_where_list" />
+        <include refid="order_by_list" />
+        <include refid="page_limit" />
+    </select>
+
+    <select id="count" resultType="java.lang.Integer" parameterType="storeJpo">
+        SELECT COUNT(*) FROM STORE
+        <include refid="base_where_list" />
+    </select>
+
+    <update id="update" parameterType="storeJpo">
+        UPDATE STORE
+        <set>
+            <if test="name != null"> NAME = #{name}, </if>
+        </set>
+        WHERE
+        ID = #{id}
+    </update>
+
+    <insert id="insert" parameterType="storeJpo">
+        INSERT INTO STORE ( ID, NAME, , CATEGORY, KEYWORD, ADDRESS )
+        VALUES ( #{id}, #{name}, #{category}, #{keyword}, #{address} )
+    </insert>
+
+    <delete id="delete" parameterType="storeJpo">
+        DELETE FROM STORE WHERE ID = #{id}
+    </delete>
+
+    <sql id="base_where_list">
+        <where>
+            <if test="id != null and id != ''" >
+                AND ID = #{id}
+            </if>
+            <if test="name != null and name != ''" >
+                AND NAME LIKE CONCAT(#{name}, '%')
+            </if>
+            <if test="address != null and address != ''" >
+                AND ADDRESS = #{address}
+            </if>
+            <if test="category != null and category != ''" >
+                AND CATEGORY = #{category}
+            </if>
+            <if test="keyword != null and keyword != ''" >
+                AND KEYWORD = #{keyword}
+            </if>
+        </where>
+    </sql>
+
+    <sql id="order_by_list">
+        <if test="sort != null and direction != null" >
+            ORDER BY ${sort} ${direction}
+        </if>
+    </sql>
+
+    <sql id="page_limit">
+        LIMIT #{limit}, #{offset}
+    </sql>
+
+</mapper>
